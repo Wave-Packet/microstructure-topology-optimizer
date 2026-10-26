@@ -1,0 +1,23 @@
+__pycache__/
+*.py[cod]
+*.swp
+.pytest_cache/
+.coverage
+.idea/
+.vscode/
+.DS_Store
+
+# Conda/Mamba and Pixi environments
+.conda/
+.mamba/
+.pixi/
+.bootstrap/
+.tmp/
+
+# Generated numerical results
+*.h5
+*.xdmf
+*.pvd
+*.vtu
+*.pvtu
+out_*/

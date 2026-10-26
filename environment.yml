@@ -1,0 +1,15 @@
+name: microstructure-topology
+channels:
+  - conda-forge
+dependencies:
+  - python=3.12
+  - fenics-dolfinx=0.10.*
+  - dolfinx_mpc=0.10.*
+  - mpi=*=mpich
+  - python-gmsh
+  - matplotlib
+  - numpy
+  - pyvista
+  - scipy
+  - slepc4py
+  - pytest
