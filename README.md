@@ -39,15 +39,15 @@ python Optimus.py --criterion bulk_modulus_max --no-plot
 
 Les sept fonctions de l'article sont disponibles :
 
-| Option `--criterion` | Grandeur optimisee | Equation | Penalite volumique par defaut |
-|---|---|---:|---:|
-| `horizontal_rigidity_max` | rigidite horizontale maximale | (49) | 10 |
-| `bulk_modulus_max` | module de compression maximal | (50) | 20 |
-| `shear_modulus_max` | module de cisaillement maximal | (51) | 50 |
-| `modified_poisson_ratio_min` | coefficient de Poisson modifie minimal | (52) | 0 |
-| `modified_poisson_ratio_max` | coefficient de Poisson modifie maximal | (54) | 0 |
-| `poisson_ratio_min` | coefficient de Poisson minimal | (56) | 0 |
-| `poisson_ratio_max` | coefficient de Poisson maximal | (58) | 0 |
+| Option `--criterion` | Grandeur optimisee | Penalite volumique par defaut |
+|---|---|---:|
+| `horizontal_rigidity_max` | rigidite horizontale maximale | 10 |
+| `bulk_modulus_max` | module de compression maximal | 20 |
+| `shear_modulus_max` | module de cisaillement maximal | 50 |
+| `modified_poisson_ratio_min` | coefficient de Poisson modifie minimal | 0 |
+| `modified_poisson_ratio_max` | coefficient de Poisson modifie maximal | 0 |
+| `poisson_ratio_min` | coefficient de Poisson minimal | 0 |
+| `poisson_ratio_max` | coefficient de Poisson maximal | 0 |
 
 La valeur peut etre remplacee avec `--volume-penalty`. Le comportement initial
 du programme correspond a `modified_poisson_ratio_max`.
