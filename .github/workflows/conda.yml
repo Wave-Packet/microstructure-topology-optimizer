@@ -1,0 +1,36 @@
+name: Conda / DOLFINx checks
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: mamba-org/setup-micromamba@v3
+        with:
+          environment-file: environment.yml
+          cache-environment: true
+          cache-downloads: true
+      - name: Check scientific environment
+        run: python scripts/check_environment.py
+        shell: micromamba-shell {0}
+      - name: Test objective functions
+        run: pytest -q
+        shell: micromamba-shell {0}
+      - name: Check command-line interface
+        run: python Optimus.py --list-criteria
+        shell: micromamba-shell {0}
+      - name: Run a small DOLFINx smoke test
+        env:
+          PYVISTA_OFF_SCREEN: "true"
+        run: >-
+          python Optimus.py
+          --criterion modified_poisson_ratio_max
+          --mesh-resolution 4
+          --max-iterations 1
+          --no-plot
+        shell: micromamba-shell {0}
