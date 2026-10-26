@@ -66,6 +66,74 @@ La resolution normale du maillage reste 62. Les fichiers `mesh.xdmf`,
 `mesh.h5`, `solution.xdmf` et `solution.h5` sont des sorties de calcul et ne
 sont pas versionnes.
 
+## Afficher les resultats
+
+Commencer par verifier l'environnement :
+
+```bash
+mamba env create -f environment.yml
+mamba activate microstructure-topology
+python scripts/check_environment.py
+```
+
+### Affichage direct avec PyVista
+
+Pour tester rapidement le programme avec une petite resolution et afficher la
+microstructure apres chaque iteration :
+
+```bash
+python Optimus.py \
+  --criterion modified_poisson_ratio_max \
+  --mesh-resolution 8 \
+  --max-iterations 5
+```
+
+Une fenetre PyVista s'ouvre apres chaque iteration. Fermer la fenetre permet au
+calcul de poursuivre l'iteration suivante. Il est conseille de commencer avec
+une resolution de 8, puis d'essayer 20 avant d'utiliser la resolution normale
+de 62.
+
+Un calcul complet peut par exemple etre lance avec :
+
+```bash
+python Optimus.py \
+  --criterion modified_poisson_ratio_max \
+  --mesh-resolution 62 \
+  --max-iterations 100
+```
+
+### Visualisation avec ParaView
+
+Pour executer le calcul sans fenetre graphique et conserver sa sortie dans un
+journal :
+
+```bash
+python Optimus.py \
+  --criterion bulk_modulus_max \
+  --mesh-resolution 20 \
+  --max-iterations 30 \
+  --no-plot | tee optimisation.log
+```
+
+Le programme cree les fichiers suivants dans le repertoire courant :
+
+- `mesh.xdmf` et `mesh.h5` : maillage ;
+- `solution.xdmf` et `solution.h5` : champ final du module de Young ;
+- `optimisation.log`, lorsque `tee` est utilise : matrices homogenisees,
+  objectif `J`, aire, angle `theta` et coefficient de Poisson.
+
+Dans ParaView, ouvrir `solution.xdmf`, cliquer sur **Apply**, choisir la
+variable `Y` dans **Coloring**, puis selectionner **Surface With Edges** pour
+voir la microstructure. Les fichiers de sortie sont remplaces a chaque
+iteration : ils correspondent donc au dernier etat calcule.
+
+### Resultats des controles GitHub
+
+Le workflow GitHub Actions verifie l'installation, les formules des sept
+criteres et un petit calcul DOLFINx. Son etat et ses journaux sont disponibles
+dans l'onglet **Actions** du depot. Ce workflow valide le code, mais ne publie
+pas actuellement d'image de la microstructure.
+
 ## Verifier les formules sans DOLFINx
 
 `criteria.py` ne depend que de NumPy. Les tests comparent les derivees
